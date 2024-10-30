@@ -1,0 +1,110 @@
+[gd_scene load_steps=16 format=3 uid="uid://p8tuc3y5vrky"]
+
+[ext_resource type="Texture2D" uid="uid://e26w3vob1e85" path="res://Enemy/ClassicZombieIdleAnimation.png" id="1_bxok8"]
+[ext_resource type="Script" path="res://Scripts/zombie.gd" id="1_oaa8d"]
+[ext_resource type="Texture2D" uid="uid://de3f61s25pfox" path="res://Enemy/HeadOff.png" id="2_u7hqk"]
+[ext_resource type="Texture2D" uid="uid://bxktmfgmfb3iv" path="res://ArtAssets/ZombieHealthBarEmpty.png" id="4_ghvms"]
+[ext_resource type="Texture2D" uid="uid://daafcs1yvk1jm" path="res://ArtAssets/ZombieHealthBar.png" id="5_n3jyk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7vs5x"]
+atlas = ExtResource("2_u7hqk")
+region = Rect2(0, 0, 64, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqcdy"]
+atlas = ExtResource("2_u7hqk")
+region = Rect2(64, 0, 64, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hdxwd"]
+atlas = ExtResource("1_bxok8")
+region = Rect2(0, 0, 64, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8o7bx"]
+atlas = ExtResource("1_bxok8")
+region = Rect2(68, 0, 64, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x02jh"]
+atlas = ExtResource("1_bxok8")
+region = Rect2(136, 0, 64, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2hhuh"]
+atlas = ExtResource("1_bxok8")
+region = Rect2(204, 0, 64, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fpqd4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7vs5x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqcdy")
+}],
+"loop": false,
+"name": &"Death",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_hdxwd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8o7bx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x02jh")
+}, {
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_2hhuh")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_roijd"]
+size = Vector2(14.5, 37)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3aq1x"]
+size = Vector2(20, 37)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c1eq4"]
+radius = 5.0
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_oaa8d")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-8, -19)
+scale = Vector2(0.304688, 0.304688)
+sprite_frames = SubResource("SpriteFrames_fpqd4")
+animation = &"Death"
+flip_h = true
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+offset_left = -15.0
+offset_top = -43.0
+offset_right = 3.0
+offset_bottom = -37.0
+max_value = 3.0
+value = 3.0
+nine_patch_stretch = true
+texture_under = ExtResource("4_ghvms")
+texture_progress = ExtResource("5_n3jyk")
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(-6, -18)
+shape = SubResource("RectangleShape2D_roijd")
+
+[node name="DamageBox" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(-9, -19)
+shape = SubResource("RectangleShape2D_3aq1x")
+disabled = true
+
+[node name="Temp" type="CollisionShape2D" parent="."]
+position = Vector2(-5, -19)
+shape = SubResource("CircleShape2D_c1eq4")
+disabled = true
+
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]

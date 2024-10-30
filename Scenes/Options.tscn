@@ -1,0 +1,69 @@
+[gd_scene load_steps=2 format=3 uid="uid://dylhlxm0l2355"]
+
+[ext_resource type="Script" path="res://Scripts/options.gd" id="1_opm5s"]
+
+[node name="Options" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -574.0
+offset_bottom = -323.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+script = ExtResource("1_opm5s")
+
+[node name="OptionsScreen" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = -50.5
+offset_right = 35.0
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackButton" type="Button" parent="OptionsScreen"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../TempButton2")
+focus_neighbor_top = NodePath("../TempButton2")
+focus_neighbor_right = NodePath("../TempButton")
+focus_neighbor_bottom = NodePath("../TempButton")
+focus_next = NodePath("../TempButton")
+focus_previous = NodePath("../TempButton2")
+text = "Back"
+
+[node name="TempButton" type="Button" parent="OptionsScreen"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../BackButton")
+focus_neighbor_top = NodePath("../BackButton")
+focus_neighbor_right = NodePath("../TempButton2")
+focus_neighbor_bottom = NodePath("../TempButton2")
+focus_next = NodePath("../TempButton2")
+focus_previous = NodePath("../BackButton")
+text = "Temp"
+
+[node name="TempButton2" type="Button" parent="OptionsScreen"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../TempButton")
+focus_neighbor_top = NodePath("../TempButton")
+focus_neighbor_right = NodePath("../BackButton")
+focus_neighbor_bottom = NodePath("../BackButton")
+focus_next = NodePath("../BackButton")
+focus_previous = NodePath("../TempButton")
+text = "Temp
+"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(289, 162)
+zoom = Vector2(2, 2)
+
+[connection signal="pressed" from="OptionsScreen/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="OptionsScreen/BackButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="OptionsScreen/TempButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="OptionsScreen/TempButton2" to="." method="_on_quit_button_pressed"]

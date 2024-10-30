@@ -1,0 +1,68 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4xt2supiuf0p"]
+
+[ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_kyu8j"]
+[ext_resource type="PackedScene" uid="uid://muh7gofk6fhk" path="res://Scenes/SceneTransitionAnimation.tscn" id="2_6i41l"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchor_right = 0.498
+anchor_bottom = 0.5
+offset_right = 0.303955
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+script = ExtResource("1_kyu8j")
+
+[node name="SceneTransitionAnimation" parent="." instance=ExtResource("2_6i41l")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(288, 162)
+zoom = Vector2(2, 2)
+
+[node name="MainScreen" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -35.0
+offset_top = -101.0
+offset_right = 35.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="StartButton" type="Button" parent="MainScreen"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../QuitButton")
+focus_neighbor_top = NodePath("../QuitButton")
+focus_neighbor_right = NodePath("../OptionsButton")
+focus_neighbor_bottom = NodePath("../OptionsButton")
+focus_next = NodePath("../OptionsButton")
+focus_previous = NodePath("../QuitButton")
+text = "Start"
+
+[node name="OptionsButton" type="Button" parent="MainScreen"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../StartButton")
+focus_neighbor_top = NodePath("../StartButton")
+focus_neighbor_right = NodePath("../QuitButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
+focus_next = NodePath("../QuitButton")
+focus_previous = NodePath("../StartButton")
+text = "Options"
+
+[node name="QuitButton" type="Button" parent="MainScreen"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../OptionsButton")
+focus_neighbor_top = NodePath("../OptionsButton")
+focus_neighbor_right = NodePath("../StartButton")
+focus_neighbor_bottom = NodePath("../StartButton")
+focus_next = NodePath("../StartButton")
+focus_previous = NodePath("../OptionsButton")
+text = "Quit"
+
+[connection signal="pressed" from="MainScreen/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MainScreen/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="MainScreen/QuitButton" to="." method="_on_quit_button_pressed"]
